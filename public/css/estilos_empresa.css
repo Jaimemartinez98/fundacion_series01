@@ -1,0 +1,12 @@
+.estilo_boton {
+    margin-top: 25px !important;
+    width: 50% !important;
+    border-radius: 30px !important;
+}
+
+.estilo_center {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
