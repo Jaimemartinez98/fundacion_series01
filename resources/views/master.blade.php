@@ -25,6 +25,13 @@
                   <li class="nav-item">
                     <a class="nav-link" href="{{ route('empresas.create') }}">Agregar Empresas</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Listar juegos</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Agregar juegos</a>
+                  </li>
+
 
                 </ul>
               </div>
