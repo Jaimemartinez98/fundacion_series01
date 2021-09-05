@@ -17,7 +17,7 @@ class Series extends Migration
             $table->id();
             $table->string('nombre_serie', 100);
             $table->string('caratula', 100);
-            $table->text('descripcion', 100);
+            $table->text('descripcion');
             $table->unsignedBigInteger('empresa_id');
             $table->foreign('empresa_id')->references('id')->on('empresas');
             $table->timestamps();

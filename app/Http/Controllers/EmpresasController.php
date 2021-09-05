@@ -3,10 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Empresas;
+use App\Models\Pruebas;
 
 class EmpresasController extends Controller
 {
     public function index(){
+
+        // $empresas = Empresas::where('id',3)->first();
+
+        // dd($empresas);
+
+        $pruebas = Pruebas::all();
+
+        dd($pruebas);
+
 
         return view('empresas.index');
 
