@@ -3,19 +3,45 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Empresas;
+use App\Models\Series;
+use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
 {
     public function index(){
-        //Muestra un listado de una consulta
+
+        $series = DB::table('series AS s')
+                ->select('s.id','s.nombre_serie','e.nombre_empresa')
+                ->join('empresas AS e', 's.empresa_id', '=', 'e.id')
+                ->get();
+
+        return view('series.index', [
+            'series' => $series
+        ]
+
+        );
     }
 
     public function create(){
-        //Muestra un formulario donde luego introduciremos datos
+
+        $empresas = Empresas::get();
+
+        return view('series.crear_serie', [
+            'empresas' => $empresas
+            ]);
     }
 
-    public function store(){
-        //Introduce los datos que provienen de un formulario
+    public function store(Request $request){
+
+        $series = new Series;
+        $series->nombre_serie = $request->nombre_serie;
+        $series->caratula = $request->caratula;
+        $series->descripcion = $request->descripcion;
+        $series->empresa_id = $request->empresa_id;
+        $series->save();
+
+        return back();
     }
 
     public function show($id){
@@ -23,14 +49,33 @@ class SeriesController extends Controller
     }
 
     public function edit($id){
-        //Mostrar un registro de la base de datos pero nos permite añadirle o quitarle cosas
+
+        $serie = Series::where('id',$id)->first();
+        $empresas = Empresas::get();
+
+        return view('series.edit_serie', [
+            'serie' => $serie,
+            'empresas' => $empresas
+            ]);
     }
 
-    public function update($id){
-        //Va a actualizar un registro que proviene del formulario edit
+    public function update(Request $request, $id){
+
+        $serie = Series::where('id',$id)->first();
+        $serie->nombre_serie = $request->nombre_serie;
+        $serie->caratula = $request->caratula;
+        $serie->descripcion = $request->descripcion;
+        $serie->empresa_id = $request->empresa_id;
+        $serie->save();
+
+        return back();
+
     }
 
     public function delete($id){
-        //Elimina un registro de la base datos
+
+        Series::where('id',$id)->delete();
+
+        return back();
     }
 }

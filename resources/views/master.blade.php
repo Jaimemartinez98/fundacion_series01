@@ -26,10 +26,10 @@
                     <a class="nav-link" href="{{ route('empresas.create') }}">Agregar Empresas</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Listar juegos</a>
+                    <a class="nav-link" href="{{ route('series.index') }}">Listar series</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Agregar juegos</a>
+                    <a class="nav-link" href="{{ route('series.create') }}">Agregar series</a>
                   </li>
 
 

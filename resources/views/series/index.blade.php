@@ -6,22 +6,20 @@
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">NIT</th>
-                <th scope="col">Télefono</th>
+                <th scope="col">Nombre Serie</th>
+                <th scope="col">Nombre Empresa</th>
                 <th scope="col">Acciones</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($empresas as $empresa)
+            @foreach ($series as $serie)
                 <tr>
-                    <td>{{ $empresa->id }}</td>
-                    <td>{{ $empresa->nombre_empresa }}</td>
-                    <td>{{ $empresa->nit }}</td>
-                    <td>{{ $empresa->telefono }}</td>
+                    <td>{{ $serie->id }}</td>
+                    <td>{{ $serie->nombre_serie }}</td>
+                    <td>{{ $serie->nombre_empresa }}</td>
                     <td>
-                        <a href="{{ route('empresas.edit', $empresa->id) }}" class="btn btn-warning">EDITAR</a>
-                        <form action="{{ route('empresas.delete', $empresa->id) }}" method="POST">
+                        <a href="{{ route('series.edit', $serie->id) }}" class="btn btn-warning">EDITAR</a>
+                        <form action="{{ route('series.delete', $serie->id) }}" method="POST">
                             @csrf
                             @method('delete')
                             <button type="submit" class="btn btn-danger">ELIMINAR</button>
