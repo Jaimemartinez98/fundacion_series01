@@ -5,7 +5,13 @@
 
 @section('content')
 
-    <form action="{{ route('series.update', $serie->id) }}" method="POST">
+    @if (session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+
+    <form action="{{ route('series.update', $serie->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('put')
 
@@ -15,18 +21,28 @@
                 <label for="nombre_serie" class="form-label">Nombre Serie</label>
                 <input type="text" class="form-control" id="nombre_serie" name="nombre_serie"
                     value="{{ $serie->nombre_serie }}" placeholder="Introduzca el nombre de la serie">
+                @if ($errors->has('nombre_serie'))
+                    <p class="text-danger">{{ $errors->first('nombre_serie') }}</p>
+                @endif
             </div>
 
             <div class="col-4">
                 <label for="caratula" class="form-label">Caratula</label>
-                <input type="text" class="form-control" id="caratula" name="caratula" placeholder="Introduzca la portada"
+                <a href="{{ asset('files/' . $serie->caratula) }}" target="_blank">Ver recurso actual</a>
+                <input type="file" class="form-control" id="caratula" name="caratula" placeholder="Introduzca la portada" accept="images/*"
                     value="{{ $serie->caratula }}">
+                @if ($errors->has('caratula'))
+                    <p class="text-danger">{{ $errors->first('caratula') }}</p>
+                @endif
             </div>
 
             <div class="col-4">
                 <label for="descripcion" class="form-label">Descripción</label>
                 <input type="text" class="form-control" id="descripcion" name="descripcion"
                     value="{{ $serie->descripcion }}" placeholder="Introduzca el descripción de la serie">
+                @if ($errors->has('descripcion'))
+                    <p class="text-danger">{{ $errors->first('descripcion') }}</p>
+                @endif
             </div>
             <div class="col-4">
                 <label for="empresa_id" class="form-label">Seleccione la empresa</label>
@@ -41,7 +57,9 @@
                     @endforeach
 
                 </select>
-
+                @if ($errors->has('empresa_id'))
+                    <p class="text-danger">{{ $errors->first('empresa_id') }}</p>
+                @endif
             </div>
 
 

@@ -34,14 +34,41 @@ class SeriesController extends Controller
 
     public function store(Request $request){
 
+        $request->validate(
+            [
+                'nombre_serie' => 'required',
+                'caratula' => 'required',
+                'descripcion' => 'required',
+                'empresa_id' => 'required',
+            ]
+            ,
+            [
+                'nombre_serie.required' => 'El nombre de la serie es requerida',
+                'caratula.required' => 'La caratula es requerida',
+                'descripcion.required' => 'La descripción es requerida',
+                'empresa_id.required' => 'La empresa es requerida',
+
+            ]
+        );
+
         $series = new Series;
         $series->nombre_serie = $request->nombre_serie;
-        $series->caratula = $request->caratula;
+
         $series->descripcion = $request->descripcion;
         $series->empresa_id = $request->empresa_id;
+
+       if ($request->hasfile('caratula')) {
+           $file = $request->file('caratula');
+           $nombre = "archivo_".time().".".$file->guessExtension();
+           $ruta = public_path("files/".$nombre);
+
+           copy($file,$ruta);
+           $series->caratula = $nombre;
+       }
+
         $series->save();
 
-        return back();
+        return back()->with('message','La serie se creo exitosamente');
     }
 
     public function show($id){
@@ -61,14 +88,40 @@ class SeriesController extends Controller
 
     public function update(Request $request, $id){
 
+        $request->validate(
+            [
+                'nombre_serie' => 'required',
+                'caratula' => 'required',
+                'descripcion' => 'required',
+                'empresa_id' => 'required',
+            ]
+            ,
+            [
+                'nombre_serie.required' => 'El nombre de la serie es requerida',
+                'caratula.required' => 'La caratula es requerida',
+                'descripcion.required' => 'La descripción es requerida',
+                'empresa_id.required' => 'La empresa es requerida',
+
+            ]
+        );
+
         $serie = Series::where('id',$id)->first();
         $serie->nombre_serie = $request->nombre_serie;
-        $serie->caratula = $request->caratula;
         $serie->descripcion = $request->descripcion;
         $serie->empresa_id = $request->empresa_id;
+
+        if ($request->hasfile('caratula')) {
+            $file = $request->file('caratula');
+            $nombre = "archivo_".time().".".$file->guessExtension();
+            $ruta = public_path("files/".$nombre);
+
+            copy($file,$ruta);
+            $series->caratula = $nombre;
+        }
+
         $serie->save();
 
-        return back();
+        return back()->with('message','La serie se actualizo exitosamente');
 
     }
 

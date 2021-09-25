@@ -28,6 +28,27 @@ class EmpresasController extends Controller
 
     public function store(Request $request){
 
+        $request->validate(
+            [
+                'nombre_empresa' => 'required',
+                'direccion_empresa' => 'required',
+                'nit_empresa' => 'required',
+                'celular_empresa' => 'required|numeric',
+                'correo_empresa' => 'required|email',
+            ]
+            ,
+            [
+                'nombre_empresa.required' => 'El nombre de la empresa es requerido',
+                'direccion_empresa.required' => 'La dirección de la empresa es requerida',
+                'nit_empresa.required' => 'El nit de la empresa es requerido',
+                'celular_empresa.required' => 'El celular de la empresa es requerido',
+                'celular_empresa.numeric' => 'El celular debe ser un dato númerico',
+                'correo_empresa.required' => 'El correo es requerido',
+                'correo_empresa.email' => 'El correo debe ser real ej. example@example.com',
+
+            ]
+        );
+
         $empresa = new Empresas;
         $empresa->nombre_empresa = $request->nombre_empresa;
         $empresa->direccion = $request->direccion_empresa;
@@ -36,7 +57,8 @@ class EmpresasController extends Controller
         $empresa->correo_contacto = $request->correo_empresa;
         $empresa->save();
 
-        return back();
+        return back()->with('message','La empresa se creo exitosamente');
+
 
 
     }
@@ -59,6 +81,28 @@ class EmpresasController extends Controller
     public function update(Request $request, $id){
 
         //Va a actualizar un registro que proviene del formulario edit
+
+        $request->validate(
+            [
+                'nombre_empresa' => 'required',
+                'direccion_empresa' => 'required',
+                'nit_empresa' => 'required',
+                'celular_empresa' => 'required|numeric',
+                'correo_empresa' => 'required|email',
+            ]
+            ,
+            [
+                'nombre_empresa.required' => 'El nombre de la empresa es requerido',
+                'direccion_empresa.required' => 'La dirección de la empresa es requerida',
+                'nit_empresa.required' => 'El nit de la empresa es requerido',
+                'celular_empresa.required' => 'El celular de la empresa es requerido',
+                'celular_empresa.numeric' => 'El celular debe ser un dato númerico',
+                'correo_empresa.required' => 'El correo es requerido',
+                'correo_empresa.email' => 'El correo debe ser real ej. example@example.com',
+
+            ]
+        );
+
         $empresa = Empresas::where('id',$id)->first();
         $empresa->nombre_empresa = $request->nombre_empresa;
         $empresa->direccion = $request->direccion_empresa;
@@ -67,7 +111,7 @@ class EmpresasController extends Controller
         $empresa->correo_contacto = $request->correo_empresa;
         $empresa->save();
 
-        return redirect('/empresas');
+        return redirect('/empresas')->with('message','La empresa se actualizo exitosamente');
     }
 
     public function delete($id){
