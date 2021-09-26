@@ -23,6 +23,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        if (auth()->user()->perfil_id == 1 || auth()->user()->perfil_id == 2) {
+            return view('home');
+        } else {
+            return view('acces_denied');
+        }
+
+
     }
 }
