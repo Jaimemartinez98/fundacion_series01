@@ -72,13 +72,24 @@ class SeriesController extends Controller
     }
 
     public function show($id){
-        //Mostrar un registro de la base de datos de usuario final
+
+        $serie = Series::where('id',$id)->first();
+        $empresas = Empresas::get();
+        $series = Series::whereNotIn('id', [$id])->get();
+
+        return view('series.ver_serie', [
+            'serie' => $serie,
+            'empresas' => $empresas,
+            'series' => $series
+            ]);
+
     }
 
     public function edit($id){
 
         $serie = Series::where('id',$id)->first();
         $empresas = Empresas::get();
+
 
         return view('series.edit_serie', [
             'serie' => $serie,

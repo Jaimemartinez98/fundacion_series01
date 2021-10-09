@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Series;
 
 class HomeController extends Controller
 {
@@ -24,12 +25,13 @@ class HomeController extends Controller
     public function index()
     {
 
-        if (auth()->user()->perfil_id == 1 || auth()->user()->perfil_id == 2) {
-            return view('home');
-        } else {
-            return view('acces_denied');
-        }
 
+    $series = Series::get();
+
+     return view('home',[
+         'series'=> $series,
+
+     ]);
 
     }
 }
